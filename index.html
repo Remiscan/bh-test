@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Black hole expansion simulation(ish)</title>
+		<meta charset="utf8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="color-scheme" content="light dark">
+
+		<style>
+			html, body {
+				width: 100svw;
+				height: 100svh;
+				--pi: 3.14;
+				overflow: clip;
+			}
+
+			body {
+				display: grid;
+				grid-template-columns: minmax(0, 1fr);
+				grid-template-rows: minmax(0, 1fr);
+				place-content: center;
+				place-items: center;
+				margin: 0px;
+				padding: 0px;
+				position: relative;
+
+				--mass-black-hole: 1000;
+				--radius-black-hole: 33; /* svmax */
+				--density-black-hole: calc(var(--mass-black-hole) * 3 / (4 * var(--pi) * pow(var(--radius-black-hole), 3)));
+				--volume-black-hole: calc((4/3) * var(--pi) * pow(var(--radius-black-hole), 3));
+			}
+
+			.mass {
+				width: calc(2svmax * var(--radius));
+				height: calc(2svmax * var(--radius));
+				background-color: var(--color, red);
+				border-radius: 50%;
+				position: absolute;
+			}
+
+			.black-hole {
+				--mass: var(--mass-black-hole);
+				--radius: var(--radius-black-hole);
+				--color: black;
+
+				grid-row: 1 / -1;
+				grid-column: 1 / -1;
+				align-self: start;
+				justify-self: start;
+				left: 0%;
+				top: 50%;
+				translate: -50% -50%;
+			}
+
+			.small-mass {
+				--mass-ratio: .00001;
+				--density-ratio: .1;
+				--mass: calc(var(--mass-ratio) * var(--mass-black-hole));
+				--density: calc(var(--density-ratio) * var(--density-black-hole));
+				--volume: calc(var(--mass) / var(--density));
+				--radius: pow(var(--volume) / (var(--pi) * 4 / 3), (1/3));
+
+				left: 66svmax;
+				top: 50%;
+				translate: -50% -50%;
+			}
+		</style>
+</head>
+
+<body>
+	<div class="mass black-hole"></div>
+	<div class="mass small-mass"></div>
+</body>
